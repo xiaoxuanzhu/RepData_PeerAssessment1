@@ -124,24 +124,15 @@ totalsteps_by_date <- activity %>% group_by(date) %>% summarise(total_steps = su
 
 ```r
 library(ggplot2)
-if (!file.exists("./figure")) {
-    dir.create("./figure")
-}
-png("./figure/plot1.png")
-ggplot(totalsteps_by_date, aes(total_steps)) +
+plot1 <- ggplot(totalsteps_by_date, aes(total_steps)) +
     geom_histogram(breaks = seq(0, 22000, by = 1000), col = "black", alpha = .5) + 
     scale_x_continuous(breaks = seq(0, 22000, by = 2000)) + 
     scale_y_continuous(breaks = seq(0, 10, by = 2)) + 
     labs(x = "Total steps (per day)", y = "Counts", title = "Distribution of Total Steps per Day")
-dev.off()
+plot1
 ```
 
-```
-## quartz_off_screen 
-##                 2
-```
-
-![](./figure/plot1.png)
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
 
 ### Calculate the mean and median of the total number of steps taken per day
@@ -226,8 +217,7 @@ interval_max
 
 
 ```r
-png("./figure/plot2.png")
-ggplot(avesteps_by_interval, aes(interval, ave_steps)) + 
+plot2 <- ggplot(avesteps_by_interval, aes(interval, ave_steps)) + 
     geom_line() + 
     geom_vline(xintercept = as.numeric(interval_max[1, 1]), color = "red", alpha = .5) + 
     scale_x_time(breaks = c(as_hms("00:00:00"), as_hms("04:00:00"), as_hms("08:00:00"), as_hms("12:00:00"), 
@@ -239,15 +229,10 @@ ggplot(avesteps_by_interval, aes(interval, ave_steps)) +
                   alpha = 0.5, color = "red"), hjust = -0.1, size = 4) + 
     theme(legend.position = "none") + 
     geom_point(aes(x = as.numeric(interval_max[1, 1]), y = ave_steps_max, color = "red", alpha = 0.5), size = 1)
-dev.off()
+plot2
 ```
 
-```
-## quartz_off_screen 
-##                 2
-```
-
-![](./figure/plot2.png)
+![](PA1_template_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
 
 
 ## Imputing missing values
@@ -303,21 +288,16 @@ totalsteps_by_date <- activity_fixed %>% group_by(date) %>% summarise(total_step
 
 
 ```r
-png("./figure/plot3.png")
-ggplot(totalsteps_by_date, aes(total_steps)) +
+plot3 <- ggplot(totalsteps_by_date, aes(total_steps)) +
     geom_histogram(breaks = seq(0, 22000, by = 1000), col = "black", alpha = .5) + 
     scale_x_continuous(breaks = seq(0, 22000, by = 2000)) + 
     scale_y_continuous(breaks = seq(0, 10, by = 2)) + 
     labs(x = "Total steps (per day)", y = "Counts", title = "Distribution of Total Steps per Day")
-dev.off()
+plot3
 ```
 
-```
-## quartz_off_screen 
-##                 2
-```
+![](PA1_template_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
 
-![](./figure/plot3.png)
 
 ### Calculate the mean and median of the total number of steps taken per day
 
@@ -437,19 +417,13 @@ colnames(aveSteps_by_weekdays_interval) <- c("weekdays", "interval", "total_step
 
 
 ```r
-png("./figure/plot4.png")
-ggplot(aveSteps_by_weekdays_interval, aes(interval, ave_steps)) + 
+plot4 <- ggplot(aveSteps_by_weekdays_interval, aes(interval, ave_steps)) + 
     geom_line() + 
     facet_grid(weekdays ~.) +
     labs(x = "5-Minutes Interval", y = "Average Number of Steps across All Days", 
          title = "The Average Daily Activity Pattern")
-dev.off()
+plot4
 ```
 
-```
-## quartz_off_screen 
-##                 2
-```
-
-![](./figure/plot4.png)
+![](PA1_template_files/figure-html/unnamed-chunk-23-1.png)<!-- -->
 
